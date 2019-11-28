@@ -1,0 +1,60 @@
+server:
+  port: 9091
+  servlet:
+    context-path: /notification-service
+
+spring:
+  application:
+    name: notification-service
+  rabbitmq:
+    host: localhost
+    password: admin
+    port: 5672
+    username: admin
+    listener:
+      simple:
+        default-requeue-rejected: false
+        retry:
+          max-attempts: 1
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/notification-service
+    username: renata-fraga
+    password: 12345678
+    dbcp2:
+      test-while-idle: true
+      validation-query: SELECT 1
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+
+logging:
+  level:
+    root: INFO, WARN
+    org:
+      springframework:
+        security: INFO
+        web: ERROR
+      hibernate: INFO
+      apache:
+        commons:
+          dbcp2: DEBUG
+  pattern:
+    console: '%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n'
+
+management:
+  health:
+    defaults:
+      enabled: true
+  info:
+    defaults:
+      enabled: true
+
+rabbitmq:
+  queues:
+    notification-create: notification-service.notification.create
