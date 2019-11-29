@@ -11,6 +11,7 @@ public class Notification implements Serializable {
 	private static final long serialVersionUID = 6684693831608312079L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private LocalDateTime createdAt;
@@ -18,11 +19,13 @@ public class Notification implements Serializable {
 	private String title;
 
 	@Lob
+	@Column(columnDefinition = "mediumtext")
 	private String description;
 
 	private String publisher;
 
-	@Column(columnDefinition = "jsonb")
+	@Lob
+	@Column(columnDefinition = "mediumtext")
 	private String additionalParams;
 
 	@Enumerated(EnumType.STRING)
